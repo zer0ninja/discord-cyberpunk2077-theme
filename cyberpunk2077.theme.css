@@ -1,179 +1,223 @@
 /**
- * @name Cyberpunk 2077 (2026 Total Conversion)
+ * @name Cyberpunk 2077 (Red Edition)
  * @author Patryk Bielanin | Reforged by AI
- * @description The complete restoration of the Cyberpunk aesthetic for Discord's V2 Layout.
- * @version 3.0.0
+ * @description The complete "Cyberpunk Red" conversion for Discord's 2026 Layout.
+ * @version 4.0.0
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
-/* Core Base (Load this for structure, we override styling below) */
+/* Core Base (Structure Only) */
 @import url('https://patrykbielanin.github.io/discord-cyberpunk2077-theme/base.css');
 
 :root {
-    /* --- PALETTE --- */
-    --neon-yellow: #f3e600;
-    --neon-blue: #72eaf8;
-    --neon-red: #ff003c;
-    --neon-green: #47d58b;
+    /* --- PALETTE: Cyberpunk Red Edition --- */
+    --neon-yellow: #d4af37; /* Darker Gold */
+    --neon-blue: #00a8ff;   /* Electric Blue */
+    --neon-red: #e60026;    /* INTENSE CRIMSON */
+    --neon-green: #00d26a;  /* Toxic Green */
     
-    /* Variable Hijack: Forces Cyberpunk colors onto Discord's new variables */
-    --background-primary: rgba(10, 5, 5, 0.9) !important;
-    --background-secondary: rgba(0, 0, 0, 0.7) !important;
-    --background-secondary-alt: #000 !important; /* Bottom-left user panel */
-    --background-tertiary: #050505 !important;
-    --background-floating: #020202 !important;
+    /* Variable Hijack: Forces Dark Red/Black onto Discord */
+    --bg-dark: rgba(18, 0, 0, 0.96) !important; 
+    --bg-trans: rgba(20, 2, 2, 0.85) !important;
     
-    --header-primary: var(--neon-yellow) !important;
+    --background-primary: var(--bg-dark) !important;
+    --background-secondary: var(--bg-trans) !important;
+    --background-secondary-alt: #1a0005 !important;
+    --background-tertiary: #110000 !important;
+    --background-floating: #0a0000 !important;
+    --background-accent: var(--neon-red) !important;
+    
+    --header-primary: var(--neon-red) !important;
     --header-secondary: #d3d3d3 !important;
     --text-normal: #e0e0e0 !important;
     --text-muted: #999 !important;
+    --text-link: var(--neon-blue) !important;
     
     --interactive-normal: #aaa !important;
-    --interactive-hover: var(--neon-blue) !important;
+    --interactive-hover: var(--neon-red) !important;
     --interactive-active: #fff !important;
     
+    --brand-experiment: var(--neon-red) !important;
+    --button-danger-background: var(--neon-red) !important;
+
     --font-primary: 'Rajdhani', sans-serif !important;
-    --font-display: 'Rajdhani', sans-serif !important;
 }
 
 /* --- 1. GLOBAL LAYOUT & GRADIENT KILLER --- */
 
-/* Kill the new UI gradients */
+/* Kill New UI Gradients/Fades */
 [class*="appMount_"], [class*="app_"], [class*="bg_"], 
 [class*="container_"], [class*="chat_"], [class*="content_"], 
 [class*="sidebar_"], [class*="panels_"], [class*="guilds_"],
 [class*="scroller_"], [class*="standardSidebarView_"], 
-[class*="privateChannels_"] {
-    background-image: none !important; /* Removes the fade effects */
-    background-color: transparent !important; /* Allows our main wallpaper to show */
+[class*="privateChannels_"], [class*="layer_"] {
+    background-image: none !important;
+    background-color: transparent !important;
 }
 
-/* Apply The Main Wallpaper */
+/* Apply The "Cyberpunk Red" Wallpaper */
 [class*="appMount_"] {
-    background: linear-gradient(180deg, rgba(20,5,5,0.95) 0%, rgba(0,0,0,1) 100%), 
-                url('https://library.kissclipart.com/20180904/ese/kissclipart-cyberpunk-2077-logo-transparent-clipart-cyberpun-9b73602165181313.png') center/contain no-repeat !important;
-    background-blend-mode: overlay;
-    background-attachment: fixed;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(30,0,0,0.3) 0%, rgba(10,0,0,0.9) 80%, #000 100%),
+        linear-gradient(180deg, rgba(255,0,40,0.05) 0%, rgba(0,0,0,0.9) 50%, rgba(255,0,40,0.05) 100%),
+        url('https://i.imgur.com/7g1m89H.jpg') center/cover no-repeat fixed !important;
+    background-blend-mode: multiply, normal, normal;
 }
 
-/* Scanline Overlay (The "Retro" Texture) */
-[class*="appMount_"]::after {
+/* Red "Stardust" Noise Overlay */
+[class*="appMount_"]::before {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
-    background-size: 100% 4px;
-    z-index: 9999;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.15;
+    z-index: 9998;
     pointer-events: none;
-    opacity: 0.2;
+    mix-blend-mode: color-dodge;
 }
 
-/* --- 2. SIDEBARS & BORDERS (Restoring the Reference Image) --- */
+/* --- 2. SIDEBARS, BORDERS & PANELS --- */
 
 /* Server List */
 [class*="guilds_"] {
     background: #000 !important;
-    border-right: 1px solid var(--neon-yellow);
+    border-right: 1px solid var(--neon-red);
 }
 
 /* Channel List */
 [class*="sidebar_"] {
-    background: rgba(10, 2, 5, 0.8) !important;
-    border-right: 1px solid var(--neon-red); /* The Red Line from your image */
+    background: rgba(15, 0, 0, 0.8) !important;
+    border-right: 1px solid var(--neon-red); 
     margin-right: 0;
 }
 
-/* User Panel (Bottom Left - Where your name is) */
+/* User Panel (Bottom Left) */
 [class*="panels_"] {
-    background: #050505 !important;
+    background: #080000 !important;
     border-top: 1px solid var(--neon-blue);
     margin-bottom: 0;
 }
-[class*="container_"][class*="avatar_"] { /* Specific fix for the user area */
+[class*="container_"][class*="avatar_"] { 
     background: transparent !important; 
     border: none !important;
 }
 
-/* --- 3. SQUARE EDGES (Killing the Mobile Look) --- */
+/* --- 3. SHAPE & SIZE FIXES (Square UI vs Circular Avatars) --- */
 
-/* Server Selection Pills */
+/* Force Circular Avatars (The Override) */
+:root { --avatar-size: 50% !important; }
+
+[class*="wrapper_"][class*="avatar_"], 
+[class*="wrapper_"] [class*="mask_"] {
+    mask: none !important;
+    border-radius: 50% !important;
+}
+[class*="avatar_"] { border-radius: 50% !important; }
+[class*="pointerEvents_"] { mask: none !important; }
+
+/* Square Edges for UI Elements (Folders, Pills) */
+[class*="folderIconWrapper_"], [class*="expandedFolderBackground_"] {
+    border-radius: 0 !important;
+}
 [class*="pill_"] span {
     border-radius: 0 !important;
-    background-color: #fff !important; /* White bar from your image */
+    background-color: var(--neon-red) !important;
     width: 4px !important; 
 }
-[class*="item_"] {
-    border-radius: 0 !important;
-}
 
-/* Icons & Folders */
-[class*="wrapper_"], [class*="folderIconWrapper_"], [class*="expandedFolderBackground_"] {
-    border-radius: 0 !important;
-    mask: none !important;
-}
+/* --- 4. CHAT AREA & CONTENT --- */
 
-/* --- 4. CHAT AREA & FONTS --- */
-
-/* Force Rajdhani Font */
-* {
-    font-family: 'Rajdhani', sans-serif !important;
-    text-transform: none; /* Keep chat readable, use uppercase only for headers if needed */
-}
-
-/* Headers */
-[class*="title_"] {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+/* Font & Headers */
+* { font-family: 'Rajdhani', sans-serif !important; }
+[class*="title_"] { text-transform: uppercase; letter-spacing: 1px; }
 
 /* Chat Input Bar */
 [class*="channelTextArea_"] {
-    background: rgba(0,0,0,0.5) !important;
-    border: 1px solid var(--neon-green);
+    background: rgba(0,0,0,0.6) !important;
+    border: 1px solid var(--neon-red);
     border-radius: 0 !important;
-}
-[class*="scrollableContainer_"] {
-    background: transparent !important;
 }
 
 /* Messages */
 [class*="message_"]:hover {
-    background: rgba(255, 0, 60, 0.05) !important; /* Subtle Red Tint on hover */
+    background: rgba(230, 0, 38, 0.05) !important;
     border-left: 2px solid var(--neon-red);
 }
 
-/* --- 5. EXTRAS & PATCHES --- */
+/* Pings & Mentions */
+[class*="mentioned_"] {
+    background: rgba(230, 0, 38, 0.1) !important;
+    border-left: 3px solid var(--neon-red) !important;
+}
+[class*="mentioned_"]::before { background: var(--neon-red) !important; }
+
+/* --- 5. COMPREHENSIVE FIXES (Modals, Shop, Code) --- */
 
 /* Member List */
 [class*="members_"], [class*="container_cbd271"] {
     background: rgba(0, 0, 0, 0.85) !important;
-    border-left: 1px solid var(--neon-yellow);
+    border-left: 1px solid var(--neon-red);
 }
 
-/* Scrollbars */
-::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
-::-webkit-scrollbar-thumb { background: var(--neon-red) !important; border-radius: 0 !important; }
-::-webkit-scrollbar-track { background: #111 !important; }
-
-/* Tooltips */
-[class*="tooltip_"] {
-    background: var(--neon-blue) !important;
-    color: #000 !important;
+/* Popouts & Right Click Menus */
+[class*="menu_"], [class*="list_"] {
+    background: #0a0000 !important;
+    border: 1px solid var(--neon-blue);
     border-radius: 0 !important;
-    font-weight: bold;
+}
+[class*="item_"]:hover {
+    background: var(--neon-red) !important;
+    color: #fff !important;
 }
 
-/* Glitch Animation on Hover (Servers) */
-@keyframes glitch-anim {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
+/* Modals (Settings/Uploads) - NO WHITE SCREENS */
+[class*="modal_"], [class*="uploadModal_"], [class*="root_"], [class*="footer_"] {
+    background: #0f0000 !important;
+    border: 1px solid var(--neon-red) !important;
+    box-shadow: 0 0 15px rgba(230, 0, 38, 0.2);
+    border-radius: 0 !important;
+}
+
+/* User Profile Popout */
+[class*="userPopoutOuter_"] {
+    background: rgba(15, 0, 0, 0.95) !important;
+    border: 1px solid var(--neon-blue);
+    border-radius: 0 !important;
+}
+[class*="userPopoutInner_"] { background: transparent !important; }
+
+/* Shop & Nitro */
+[class*="shop_"], [class*="applicationStore_"] { background: #050505 !important; }
+[class*="shopCard_"] {
+    background: rgba(20, 5, 5, 0.9) !important;
+    border: 1px solid var(--neon-red);
+}
+
+/* Code Blocks (Neon Terminal Style) */
+code, .hljs {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border: 1px solid var(--neon-green) !important;
+    color: var(--neon-blue) !important;
+    font-family: 'Consolas', monospace !important;
+}
+
+/* --- 6. ANIMATIONS --- */
+
+/* Glitch Animation on Server Hover */
+@keyframes glitch-red {
+    0% { transform: translate(0); text-shadow: -2px 0 var(--neon-blue); }
+    25% { transform: translate(-2px, 2px); }
+    50% { transform: translate(2px, -2px); }
+    75% { transform: translate(-2px, -2px); }
     100% { transform: translate(0); }
 }
 [class*="wrapper_"]:hover [class*="childWrapper_"] {
-    animation: glitch-anim 0.2s infinite;
-    background-color: var(--neon-blue) !important;
-    color: #000 !important;
+    animation: glitch-red 0.2s infinite;
+    background-color: var(--neon-red) !important;
+    color: #fff !important;
 }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px !important; height: 6px !important; }
+::-webkit-scrollbar-thumb { background: var(--neon-red) !important; border-radius: 0 !important; }
+::-webkit-scrollbar-track { background: #000 !important; }
