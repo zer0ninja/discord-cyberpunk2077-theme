@@ -1,30 +1,179 @@
 /**
- * @name Cyberpunk 2077
- * @author Patryk Bielanin | bielak
- * @description Cyberpunk 2077 UI styled theme for better discord
- * @version 1.0.15
- * @source https://github.com/PatrykBielanin/discord-cyberpunk2077-theme
- * @website https://github.com/PatrykBielanin/discord-cyberpunk2077-theme
- * @donate https://www.paypal.com/donate/?hosted_button_id=PGVKB863SXYUQ
+ * @name Cyberpunk 2077 (2026 Total Conversion)
+ * @author Patryk Bielanin | Reforged by AI
+ * @description The complete restoration of the Cyberpunk aesthetic for Discord's V2 Layout.
+ * @version 3.0.0
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+/* Core Base (Load this for structure, we override styling below) */
 @import url('https://patrykbielanin.github.io/discord-cyberpunk2077-theme/base.css');
 
 :root {
-    --background-primary: linear-gradient(180deg, rgba(23,0,5,.75) 10%, rgba(0,0,0,1) 65%); /* Background gradient */
-    --background-secondary: linear-gradient(180deg, rgba(23,0,5,.75) 10%, rgba(0,0,0,1) 65%); /* Background gradient */
-    --font-primary: 'Rajdhani'; /* Font */
-    --primary-text-color: lightgray; /* Font color */
+    /* --- PALETTE --- */
+    --neon-yellow: #f3e600;
+    --neon-blue: #72eaf8;
+    --neon-red: #ff003c;
+    --neon-green: #47d58b;
+    
+    /* Variable Hijack: Forces Cyberpunk colors onto Discord's new variables */
+    --background-primary: rgba(10, 5, 5, 0.9) !important;
+    --background-secondary: rgba(0, 0, 0, 0.7) !important;
+    --background-secondary-alt: #000 !important; /* Bottom-left user panel */
+    --background-tertiary: #050505 !important;
+    --background-floating: #020202 !important;
+    
+    --header-primary: var(--neon-yellow) !important;
+    --header-secondary: #d3d3d3 !important;
+    --text-normal: #e0e0e0 !important;
+    --text-muted: #999 !important;
+    
+    --interactive-normal: #aaa !important;
+    --interactive-hover: var(--neon-blue) !important;
+    --interactive-active: #fff !important;
+    
+    --font-primary: 'Rajdhani', sans-serif !important;
+    --font-display: 'Rajdhani', sans-serif !important;
+}
 
-    --primary: 23, 13, 22;  /* Background color mainly used for popups */
-    --red: 255, 0, 60; /* Use RGB values */
-    --blue: 114, 234, 248; /* Use RGB values */
-    --yellow: 243, 230, 0; /* Use RGB values */
-    --green: 71, 213, 139; /* Use RGB values */
-    --dark-green: 56, 171, 111; /* Use RGB values */
+/* --- 1. GLOBAL LAYOUT & GRADIENT KILLER --- */
 
-    --avatar-circle: 0; /* Square avatar */
-    --avatar-rounded: 5px; /* Square avatars */
-    --avatar-border: 1px solid var(--neon-red-color); /* Border of avatar */
+/* Kill the new UI gradients */
+[class*="appMount_"], [class*="app_"], [class*="bg_"], 
+[class*="container_"], [class*="chat_"], [class*="content_"], 
+[class*="sidebar_"], [class*="panels_"], [class*="guilds_"],
+[class*="scroller_"], [class*="standardSidebarView_"], 
+[class*="privateChannels_"] {
+    background-image: none !important; /* Removes the fade effects */
+    background-color: transparent !important; /* Allows our main wallpaper to show */
+}
+
+/* Apply The Main Wallpaper */
+[class*="appMount_"] {
+    background: linear-gradient(180deg, rgba(20,5,5,0.95) 0%, rgba(0,0,0,1) 100%), 
+                url('https://library.kissclipart.com/20180904/ese/kissclipart-cyberpunk-2077-logo-transparent-clipart-cyberpun-9b73602165181313.png') center/contain no-repeat !important;
+    background-blend-mode: overlay;
+    background-attachment: fixed;
+}
+
+/* Scanline Overlay (The "Retro" Texture) */
+[class*="appMount_"]::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.2;
+}
+
+/* --- 2. SIDEBARS & BORDERS (Restoring the Reference Image) --- */
+
+/* Server List */
+[class*="guilds_"] {
+    background: #000 !important;
+    border-right: 1px solid var(--neon-yellow);
+}
+
+/* Channel List */
+[class*="sidebar_"] {
+    background: rgba(10, 2, 5, 0.8) !important;
+    border-right: 1px solid var(--neon-red); /* The Red Line from your image */
+    margin-right: 0;
+}
+
+/* User Panel (Bottom Left - Where your name is) */
+[class*="panels_"] {
+    background: #050505 !important;
+    border-top: 1px solid var(--neon-blue);
+    margin-bottom: 0;
+}
+[class*="container_"][class*="avatar_"] { /* Specific fix for the user area */
+    background: transparent !important; 
+    border: none !important;
+}
+
+/* --- 3. SQUARE EDGES (Killing the Mobile Look) --- */
+
+/* Server Selection Pills */
+[class*="pill_"] span {
+    border-radius: 0 !important;
+    background-color: #fff !important; /* White bar from your image */
+    width: 4px !important; 
+}
+[class*="item_"] {
+    border-radius: 0 !important;
+}
+
+/* Icons & Folders */
+[class*="wrapper_"], [class*="folderIconWrapper_"], [class*="expandedFolderBackground_"] {
+    border-radius: 0 !important;
+    mask: none !important;
+}
+
+/* --- 4. CHAT AREA & FONTS --- */
+
+/* Force Rajdhani Font */
+* {
+    font-family: 'Rajdhani', sans-serif !important;
+    text-transform: none; /* Keep chat readable, use uppercase only for headers if needed */
+}
+
+/* Headers */
+[class*="title_"] {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Chat Input Bar */
+[class*="channelTextArea_"] {
+    background: rgba(0,0,0,0.5) !important;
+    border: 1px solid var(--neon-green);
+    border-radius: 0 !important;
+}
+[class*="scrollableContainer_"] {
+    background: transparent !important;
+}
+
+/* Messages */
+[class*="message_"]:hover {
+    background: rgba(255, 0, 60, 0.05) !important; /* Subtle Red Tint on hover */
+    border-left: 2px solid var(--neon-red);
+}
+
+/* --- 5. EXTRAS & PATCHES --- */
+
+/* Member List */
+[class*="members_"], [class*="container_cbd271"] {
+    background: rgba(0, 0, 0, 0.85) !important;
+    border-left: 1px solid var(--neon-yellow);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+::-webkit-scrollbar-thumb { background: var(--neon-red) !important; border-radius: 0 !important; }
+::-webkit-scrollbar-track { background: #111 !important; }
+
+/* Tooltips */
+[class*="tooltip_"] {
+    background: var(--neon-blue) !important;
+    color: #000 !important;
+    border-radius: 0 !important;
+    font-weight: bold;
+}
+
+/* Glitch Animation on Hover (Servers) */
+@keyframes glitch-anim {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+[class*="wrapper_"]:hover [class*="childWrapper_"] {
+    animation: glitch-anim 0.2s infinite;
+    background-color: var(--neon-blue) !important;
+    color: #000 !important;
 }
